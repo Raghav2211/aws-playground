@@ -27,6 +27,13 @@ locals {
     environment = "test"
   }
 }
+
+## DON"T do this on on ENV infrastructure
+resource "local_file" "private_key" {
+    content  = module.ec2_key_pair.private_key_pem
+    filename = "private_key.pem"
+}
+
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "4.0.0"
