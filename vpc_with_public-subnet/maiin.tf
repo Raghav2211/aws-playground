@@ -28,7 +28,7 @@ locals {
   }
 }
 
-## DON"T do this on on ENV infrastructure
+## DON"T do this on ENV infrastructure
 resource "local_file" "private_key" {
     content  = module.ec2_key_pair.private_key_pem
     filename = "private_key.pem"
