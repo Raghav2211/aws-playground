@@ -140,7 +140,7 @@ module "provider_nlb" {
   source  = "terraform-aws-modules/alb/aws"
   version = "= 8.0.0"
 
-  name = "alb-${module.vpc[0].name}-provider"
+  name = "nlb-${module.vpc[0].name}-provider"
 
   load_balancer_type = "network"
   internal           = true

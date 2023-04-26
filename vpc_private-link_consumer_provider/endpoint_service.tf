@@ -2,9 +2,9 @@ module "consumer_endpoint_default_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "4.17.0"
 
-  name        = "endpoint-${module.vpc[1].name}-consumer"
+  name        = "endpoint-${module.vpc[0].name}-consumer"
   description = "access port 80 to endpoint service"
-  vpc_id      = module.vpc[1].vpc_id
+  vpc_id      = module.vpc[0].vpc_id
 
   ingress_cidr_blocks = module.vpc[0].public_subnets_cidr_blocks
   ingress_rules       = ["http-80-tcp"]

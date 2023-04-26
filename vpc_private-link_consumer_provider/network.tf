@@ -23,7 +23,8 @@ module "vpc" {
   public_subnets     = each.value.public_subnets
   private_subnets    = each.value.private_subnets
   create_igw         = each.value.create_igw
-  enable_nat_gateway = false
+  enable_nat_gateway = each.value.enable_nat_gateway
+  single_nat_gateway = each.value.enable_nat_gateway
 
   manage_default_network_acl    = false
   manage_default_security_group = false
