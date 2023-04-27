@@ -34,7 +34,7 @@ locals {
       subnet_id                   = element(module.vpc[0].public_subnets, 0)
       vpc_security_group_ids      = [module.consumer_ec2_public_default_security_group.security_group_id]
       associate_public_ip_address = true
-      tags                        = local.tags
+      tags                        = merge(local.tags, { Role = "consumer" })
     },
     {
       name                        = "ec2-${module.vpc[1].name}-provider-private"
@@ -50,7 +50,7 @@ locals {
       sudo apt update
       sudo apt install apache2 -y
       EOT
-      tags                        = local.tags
+      tags                        = merge(local.tags, { Role = "provider" })
     }
   ]
 }
@@ -155,6 +155,20 @@ module "provider_nlb" {
       backend_protocol = "TCP"
       backend_port     = 80
       target_type      = "instance"
+      health_check = {
+        enabled             = true
+        path                = "/"
+        healthy_threshold   = 2
+        unhealthy_threshold = 2
+        interval            = 120
+        timeout             = 5
+      }
+      targets = {
+        provider = {
+          target_id = module.ec2_instance[1].id
+          port      = 80
+        }
+      }
     }
   ]
 
